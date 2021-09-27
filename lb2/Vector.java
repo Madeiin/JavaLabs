@@ -5,16 +5,24 @@ public class Vector {
 
     private double[] vects;
 
-    public Vector(int length) {
-        vects = new double[length];
-    }
+    public Vector(int length) {vects = new double[length];}
 
     public void setValue(int i, double value) {
         vects[i] = value;
     }
 
-  public String getValue() {
-        return Arrays.toString(vects);
+    public void setVectorValue (double[] vector) {
+
+       for (var j = 0; j < vects.length; ++j)
+       {
+
+           vects[j] =  vector[j];
+       }
+
+    }
+
+  public double[] getValue() {
+        return vects;
     }
 
 
@@ -39,9 +47,9 @@ public class Vector {
         double max = vects[0];
 
         for (double el : vects) {
-            if (el > max)
+            if (el > max )
             {
-                el = max;
+                max = el;
             }
 
         }
@@ -58,40 +66,65 @@ public class Vector {
                    double tmp = vects[j];
                    vects[j] = vects[j+1];
                    vects[j+1] = tmp;
+
                }
            }
        }
     }
 
     public double evkNorm() {
-        var result = 0;
+        var resultt = 0;
         for (var el : vects) {
-            result += el * el;
+            resultt += el * el;
         }
-        return Math.sqrt(result);
+        return Math.sqrt(resultt);
     }
 
-    public String mult(int m) {
+    public Vector mult(int m) {
+
+
+       double[] array = new double[vects.length];
+       Vector result = new Vector(vects.length);
+
 
         for (var i = 0; i < vects.length; ++i) {
-            vects[i] *= m;
+            array[i] = vects[i] * m;
         }
-
-        return Arrays.toString(vects);
+        result.setVectorValue(array);
+        return result;
     }
 
-    public String sum(double[] vector) {
-        for (var i = 0; i < vects.length; ++i) {
-            vects[i] += vector[i];
-        }
-        return Arrays.toString(vects);
+    @Override
+    public String toString() {
+        return "Vector{" +
+                "vects=" + Arrays.toString(vects) +
+                '}';
     }
 
-    public String scalarMult(double[] vector) {
+
+
+    public double[] sum(double[] vector) {
+        double[] array = new double[vects.length];
+        Vector result = new Vector(vects.length);
+
+
         for (var i = 0; i < vects.length; ++i) {
-            vects[i] *= vector[i];
+           array[i] = vects[i] + vector[i];
         }
-        return Arrays.toString(vects);
+        result.setVectorValue(array);
+        return array;
+    }
+
+    public Vector scalarMult(double[] vector) {
+        double[] array = new double[vects.length];
+        Vector result = new Vector(vects.length);
+
+
+        for (var i = 0; i < vects.length; ++i) {
+            array[i] = vects[i] *= vector[i];
+        }
+        result.setVectorValue(array);
+        return result;
     }
 
 }
